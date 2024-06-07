@@ -8,4 +8,8 @@ export class Ship{
     hit() {
         this.timesHit++;
     }
+
+    sink() {
+        this.isSunk = true;
+    }
 }

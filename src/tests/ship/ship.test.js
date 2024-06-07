@@ -10,4 +10,8 @@ describe('ship creation', () => {
         console.log(ship);
         expect(ship.timesHit).toBe(1);
     })
+    test('sink function must set the isSunk to false', () => {
+        ship.sink();
+        expect(ship.isSunk).toBe(true);
+    })
 })

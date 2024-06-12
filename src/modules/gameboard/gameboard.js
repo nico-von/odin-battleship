@@ -8,7 +8,7 @@ export class Gameboard {
         // variable, as well as an orientation that will
         // determine the resulting x2 and y2
         let { x, y } = coordinate;
-        let { length } = ship;
+        let { length, id} = ship;
         // base
         if (this.grid[y][x] && index < length) {
             return false;
@@ -22,7 +22,7 @@ export class Gameboard {
         let newCoordinate = isHorizontal ? {"x": x + 1, y} : {x, "y": y + 1};
         let isPlaceable = this.placeShip(ship, newCoordinate, isHorizontal, index + 1);
         if (isPlaceable){
-            this.grid[y][x] = {ship, index};
+            this.grid[y][x] = {length, id, index};
             return true;
         }
     }

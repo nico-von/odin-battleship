@@ -3,6 +3,7 @@ export class Ship{
         this.length = length;
         this.timesHit = 0;
         this.isSunk = false;
+        this.id = globalThis.crypto.randomUUID(); 
     }
 
     hit() {

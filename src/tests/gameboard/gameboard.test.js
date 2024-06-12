@@ -26,4 +26,10 @@ describe('gameboard creation', () => {
         expect(gameboard.grid[coordinate.y + 1][coordinate.x]).toHaveProperty("index");
         expect(gameboard.grid[coordinate.y + 2][coordinate.x]).toHaveProperty("index");
     })
+
+    test('place ship on existing board', () => {
+        const ship = new Ship(1);
+        let coordinate = {'x': 0, 'y': 0};
+        expect(gameboard.placeShip(ship, coordinate, false)).not.toBe(true);
+    })
 })

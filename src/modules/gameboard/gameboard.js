@@ -10,9 +10,9 @@ export class Gameboard {
         // variable, as well as an orientation that will
         // determine the resulting x2 and y2
         let { x, y } = coordinate;
-        let { length, id} = ship;
+        let { length, id } = ship;
         // base
-        if (this.grid[y][x] && index < length) {
+        if ((this.grid[y][x] && index < length) || (Object.keys(this.ships).includes(id))) {
             return false;
         }
 
@@ -21,20 +21,41 @@ export class Gameboard {
         }
 
         // recurse
-        let newCoordinate = isHorizontal ? {"x": x + 1, y} : {x, "y": y + 1};
+        let newCoordinate = isHorizontal ? { "x": x + 1, y } : { x, "y": y + 1 };
         let isPlaceable = this.placeShip(ship, newCoordinate, isHorizontal, index + 1);
-        if (isPlaceable){
-            this.grid[y][x] = {length, id, index};
+        if (isPlaceable) {
+            if (index === 0) {
+                this.ships[id] = ship;
+            }
+            this.grid[y][x] = { length, id, index };
             return true;
         }
     }
 
     receiveAttack(x, y) {
-        if (this.grid[y][x]){
-            this.coordinatesHit.push({x, y, isMissed: false})
-            return this.grid[y][x];
+        let hit = this.grid[y][x]
+        if (hit) {
+            this.coordinatesHit.push({ x, y, isMissed: false })
+            this.#hitShip(hit.id)
+            return hit.id;
         }
-        this.coordinatesHit.push({x, y, isMissed: true});
+
+        this.coordinatesHit.push({ x, y, isMissed: true });
         return;
+    }
+
+    #hitShip(id) {
+        let ship = this.ships[id]
+        ship.hit();
+        if (ship.timesHit === ship.length) ship.sink();
+    }
+
+    haveAllShipsSunk() {
+        for (let ship in this.ships) {
+            if (!(this.ships[ship].isSunk)){
+                return false;
+            }
+        }
+        return true;
     }
 }

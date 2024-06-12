@@ -7,7 +7,6 @@ describe('ship creation', () => {
     })
     test('hits function must increase timesHit', () => {
         ship.hit();
-        console.log(ship);
         expect(ship.timesHit).toBe(1);
     })
     test('sink function must set the isSunk to false', () => {

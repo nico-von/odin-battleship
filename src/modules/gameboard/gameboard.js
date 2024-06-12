@@ -50,7 +50,7 @@ export class Gameboard {
         if (ship.timesHit === ship.length) ship.sink();
     }
 
-    haveAllShipsSunk() {
+    haveAllShipsSank() {
         for (let ship in this.ships) {
             if (!(this.ships[ship].isSunk)){
                 return false;

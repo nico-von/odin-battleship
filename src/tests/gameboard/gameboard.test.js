@@ -30,6 +30,20 @@ describe('gameboard creation', () => {
     test('place ship on existing board', () => {
         const ship = new Ship(1);
         let coordinate = {'x': 0, 'y': 0};
-        expect(gameboard.placeShip(ship, coordinate, false)).not.toBe(true);
+        expect(gameboard.placeShip(ship, coordinate, false)).toBeFalsy();
+    })
+
+    test('gameboard receives attack, ship hit', () => {
+        let attack = gameboard.receiveAttack(0, 0) 
+        expect(attack).toBeTruthy();
+        expect(gameboard.coordinatesHit.length).toBe(1);
+        expect(gameboard.coordinatesHit[0].isMissed).toBeFalsy()
+    })
+
+    test('gameboard receives attack, no ship hit', () => {
+        let attack = gameboard.receiveAttack(0, 5)
+        expect(attack).toBeFalsy();
+        expect(gameboard.coordinatesHit.length).toBe(2);
+        expect(gameboard.coordinatesHit[1].isMissed).toBeTruthy()
     })
 })
